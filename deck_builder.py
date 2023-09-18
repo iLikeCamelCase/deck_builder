@@ -61,8 +61,9 @@ def write_deck_to_file(path: str, deck: Deck) -> None:
         path (str): path to store file
         deck (Deck): deck object
     """
-    my_package = Package(deck)
-    my_package.write_to_file(path + deck.name + '.apkg')
+    #my_package = Package(deck)
+    #my_package.write_to_file(path + deck.name + '.apkg')
+    Package(deck).write_to_file(path + deck.name + '.apkg')
 
 def word_list_to_file(word_list: list[(str,str)], path: str, deckname: str) -> None:
     """ given list of tuples, creates notes from them, creates deck and 

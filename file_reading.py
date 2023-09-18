@@ -1,3 +1,4 @@
+import logging
 import PyPDF2
 from abc import ABC
 
@@ -62,26 +63,31 @@ class Read(ABC):
         """
         
         processed = {}
-        NAUGHTY = '0123456789@#$%^&*+='
+        NAUGHTY = '0123456789@#$%^&*+=-_–'
         MILDLY_NAUGHTY = '[]()\'":;,.!/\\|'
         
         for word in raw:
+            remove_word = False
             remove_these = {}
-            updated_word = word
             for char in word:
                 if char in NAUGHTY:
                     # remove word
-                    continue
+                    remove_word = True
                 elif char in MILDLY_NAUGHTY:
                     # list chars to remove
-                    remove_these.add(char,None)
-            for key in remove_these:
-                updated_word = updated_word.replace(key,'')
+                    remove_these[char]=None
+            if remove_word:
+                continue
+            else:
+                for key in remove_these:
+                    word = word.replace(key,'')
 
-            if updated_word.lower() not in processed:
-                processed[updated_word.lower()] = 0
+                if word.lower() not in processed:
+                    processed[word.lower()] = 0
 
-            processed[updated_word.lower()] += 1
+                processed[word.lower()] += 1
+        
+        return processed
 
     def rank_by_occurence(self, processed: dict[str,int]) -> list[str]:
         """ takes dict of words and their rate of occurence, returns list of words
@@ -97,15 +103,15 @@ class Read(ABC):
         tuple_list.sort(key= lambda x: x[1], reverse= True)
         word_list = []
         for tuple in tuple_list:
-            word_list.append(tuple[1])
+            word_list.append(tuple[0])
         return word_list
                 
 class ReadPDF(Read):
     
     def __init__(self, file:str):
-        super().__init__(self, file)
+        super().__init__(file)
                     
-    def read_file(file:str) -> list[str]:
+    def read_file(self, file:str) -> list[str]:
         """reads (PDF) file and returns list of (possible) words. basically splits
         raw text at whitespace
 
@@ -120,14 +126,20 @@ class ReadPDF(Read):
         raw_word_list = []
         page_number = 0
         still_pages = True
-        while still_pages:
-            try:
-                page_obj = pdf_reader.pages[page_number]
-                page_text = page_obj.extract_text()
-                raw_word_list.extend(page_text.split())
-            except:
-                pass
+        #while still_pages:
+            #try:
+                #page_obj = pdf_reader.pages[page_number]
+                #page_text = page_obj.extract_text()
+                #raw_word_list.extend(page_text.split())
+            #except:
+                #still_pages = False
+                #pass
             
-            page_number += 1
+            #page_number += 1
+
+        # TESTING PURPOSES, JUST ONE PAGE AT A TIME
+        page_obj = pdf_reader.pages[0]
+        page_text = page_obj.extract_text()
+        raw_word_list.extend(page_text.split())
 
         return raw_word_list
