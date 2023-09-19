@@ -1,6 +1,6 @@
-import file_reading as fr
-import translation2 as tr
-import deck_builder as db
+from modules import file_reading as fr
+from modules import translation as tr
+from modules import deck_builder as db
 
 def create_deck_from_file(file: str, filetype: str, source: str, dest: str,
                           deckname: str, path: str) -> None:
