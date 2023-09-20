@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block head %}
+<title>Deck Builder</title>
+{% endblock head %}
+
+{% block header %}
+<header class="py-5" style="flex-grow: 1;">
+    <div class="container px-lg-5">
+        <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+            <div class="m-4 m-lg-5">
+                <h1 class="display-5 fw-bold">Create an Anki deck and start expanding your vocabulary now!</h1>
+                <p class="fs-4">Is the happy go-lucky tone of the text getting you excited for mind-numbing memorization drills? I certainly hope so!</p>
+                <div>
+                    <img src="static/assets/pdftoflashcard.png" alt="Clip art of a PDF file turning into a memorization flashcard" class="" style="max-height: 150px; position: relative;">
+                </div>
+                <form method="post" action="{{ url_for('deckbuilder') }}" class="form" style="width: 200pt; margin: auto;">
+                    {{ wtf.quick_form(form) }}
+                </form>
+                <a class="btn btn-primary btn-lg" href="#!">Call to action</a>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+
+{% block body %}
+<section class="pt-4">
+
+</section>
+{% endblock body %}

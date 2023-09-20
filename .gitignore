@@ -1,2 +1,4 @@
 # Ignore env directory
 env/
+__pycache__/
+.pytest_cache/
