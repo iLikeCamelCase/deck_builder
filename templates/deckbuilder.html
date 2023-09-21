@@ -15,10 +15,27 @@
                 <div>
                     <img src="static/assets/pdftoflashcard.png" alt="Clip art of a PDF file turning into a memorization flashcard" class="" style="max-height: 150px; position: relative;">
                 </div>
+                <!--
                 <form method="post" action="{{ url_for('deckbuilder') }}" class="form" style="width: 200pt; margin: auto;">
                     {{ wtf.quick_form(form) }}
                 </form>
-                <a class="btn btn-primary btn-lg" href="#!">Call to action</a>
+            -->
+                <form method="post" action="{{ url_for('deckbuilder') }}" enctype="multipart/form-data"  >
+                    {{ form.hidden_tag() }}
+                    <div class="my-flex-row" style="align-items: center; justify-content: center;" >
+                        <div>
+                            {{ form.file.label }}
+                            {{ form.file }}
+                        </div>
+                        <div>
+                            {{ form.raw_string.label }}
+                            {{ form.raw_string }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form.submit }}
+                    </div>
+                </form>
             </div>
         </div>
     </div>

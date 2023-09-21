@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
 from flask_bootstrap import Bootstrap
 from forms import UploadForm
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
@@ -17,18 +18,27 @@ UPLOAD_FOLDER = 'deck_builder/uploads/'
 ALLOWED_EXTENSIONS = {'pdf'} # ADD MORE
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/', methods=['GET','POST'])
-@app.route('/home', methods=['GET','POST'])
+@app.route('/')
+@app.route('/home')
 def index():
     return render_template('index.html')
 
-@app.route('/deckbuilder')
+@app.route('/deckbuilder', methods=['GET','POST'])
 def deckbuilder():
     form = UploadForm()
     if form.validate_on_submit():
+        
         file = form.file.data
-        file.save('uploads/'+file.filename)
-        # run script here
+        if file:
+            filename = secure_filename(file.filename)
+            file.save('uploads/'+filename)
+            # run script based on pdf insertion
+        else:
+            raw = form.raw_string.data
+            # run script based on raw text
+        
+    else:
+        print(form.file.data)
         
 
     return render_template('deckbuilder.html', form=form)

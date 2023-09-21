@@ -10,6 +10,25 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+
+
+/* MY CODE BELOW */
+.my-flex-row{
+  display: flex;
+  flex-direction: row;
+}
+.my-flex-child-centered{
+  justify-content: center;
+  align-items: center;
+}
+
+/* MY CODE ABOVE */
+
+
+
+
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
