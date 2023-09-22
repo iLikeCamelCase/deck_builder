@@ -1,4 +1,4 @@
-from file_reading import Read, ReadPDF
+from anki_site.modules.file_reading import Read, ReadPDF
 import os
  
 def test_ReadPDF_raw():

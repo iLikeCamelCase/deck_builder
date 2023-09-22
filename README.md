@@ -6,8 +6,8 @@
 -[ ] let user download completed deck
 
 -[ ] user functionality!
-    -[ ] login
-    -[ ] registration
+    -[x] login
+    -[x] registration
     -[x] database
     -[x] user object for data storage
     -[ ] view past decks
@@ -16,4 +16,8 @@
 -[ ] deck naming in anki_site.py
 -[ ] source and dest language in ui
 -[ ] source and dest language in anki_site.py
--[ ] delete files after use
+-[ ] delete files after 
+-[ ] fix bootstrap navbar toggle switch
+
+-[ ] purge unused css
+-[ ] make little logout page confirming logout and "you will be redirected message"

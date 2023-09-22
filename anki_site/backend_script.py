@@ -1,6 +1,6 @@
-from modules import file_reading as fr
-from modules import translation as tr
-from modules import deck_builder as db
+from anki_site.modules import file_reading as fr
+from anki_site.modules import translation as tr
+from anki_site.modules import deck_builder as db
 
 def create_deck_from_file(file: str, filetype: str, source: str, dest: str,
                           deckname: str, path: str) -> None:

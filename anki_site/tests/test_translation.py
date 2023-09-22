@@ -1,4 +1,4 @@
-from translation import translate_list_words
+from anki_site.modules.translation import translate_list_words
 
 def test_translate_list_words():
     to_translate = ['Chat', 'Soleil', 'Livre', 'Maison', 'Pomme', 'Avion',
