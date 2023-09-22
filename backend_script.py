@@ -7,13 +7,12 @@ def create_deck_from_file(file: str, filetype: str, source: str, dest: str,
     
     match filetype:
         case 'pdf':
-            reader = fr.ReadPDF('uploads/'+file)
+            reader = fr.ReadPDF(file)
         case 'docx':
             #TODO docx
             raise ValueError(f"Unsupported file type: {filetype}")
         case 'txt':
-            #TODO txt
-            raise ValueError(f"Unsupported file type: {filetype}")
+            reader = fr.ReadTXT(file)
         case '.rtf':
             #TODO rtf
             raise ValueError(f"Unsupported file type: {filetype}")

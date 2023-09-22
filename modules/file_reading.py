@@ -143,3 +143,13 @@ class ReadPDF(Read):
         raw_word_list.extend(page_text.split())
 
         return raw_word_list
+    
+class ReadTXT(Read):
+    def __init__(self, file:str):
+        super().__init__(file)
+
+    def read_file(self, file: str) -> list[str]:
+        with open(file,'r') as file:
+            file_contents = file.read()
+
+        return file_contents.split()
