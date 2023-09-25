@@ -3,6 +3,8 @@ env/
 __pycache__/
 anki_site/__pycache__
 anki_site/modules/__pycache__
-anki_site/instance
+anki_site/instance/site.db
+anki_site/instance/uploads
+anki_site/instance/created
 .pytest_cache/
 *.env
