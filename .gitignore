@@ -1,5 +1,8 @@
 # Ignore env directory
 env/
 __pycache__/
+anki_site/__pycache__
+anki_site/modules/__pycache__
+anki_site/instance
 .pytest_cache/
 *.env

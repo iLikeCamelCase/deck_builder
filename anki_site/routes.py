@@ -1,10 +1,11 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, send_file
 from anki_site.forms import UploadForm, RegistrationForm, LoginForm
 from werkzeug.utils import secure_filename
 from anki_site.backend_script import create_deck_from_file
 from anki_site.database import User, Deck
 from anki_site import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
+import os
 
 @app.route('/')
 @app.route('/home')
@@ -66,28 +67,40 @@ def decks():
 
 @app.route('/deckbuilder', methods=['GET','POST'])
 def deckbuilder():
+    UPLOAD_FOLDER = "anki_site/instance/files/uploads/"
+    DOWNLOAD_FOLDER = "anki_site/instance/files/created/"
     form = UploadForm()
+    filename = ''
     if form.validate_on_submit():
         
         file = form.file.data
         if file:
             filename = secure_filename(file.filename)
-            file.save('uploads/'+filename)
+            file.save(UPLOAD_FOLDER+filename)
             # run script based on pdf insertion
-            create_deck_from_file('uploads/'+filename,'pdf','fr','en',
-                                  'tempdecknamepdf','created/')
-
+            create_deck_from_file(UPLOAD_FOLDER+filename,'pdf','fr','en',
+                                  'tempdeckname',DOWNLOAD_FOLDER)
+            if os.path.exists(UPLOAD_FOLDER+filename):
+                os.remove(UPLOAD_FOLDER+filename)
+            # log if it doesnt exist
+            
         else:
             raw = form.raw_string.data
-            with open('uploads/textfile.txt', 'w') as file:
+            with open(UPLOAD_FOLDER+'textfile.txt', 'w') as file:
                 file.write(raw)
-            # already knows it's in upload/ directory
-            # let's change that so we need to tell it
-            create_deck_from_file('uploads/textfile.txt','txt','fr','en',
-                                  'tempdecknametxt','created/')
             # run script based on raw text
-        
+            create_deck_from_file(UPLOAD_FOLDER+'textfile.txt','txt','fr','en',
+                                  'tempdeckname',DOWNLOAD_FOLDER)
+            if os.path.exists(UPLOAD_FOLDER+'textfile.txt'):
+                os.remove(UPLOAD_FOLDER+'textfile.txt')
+
+        return send_file('instance/files/created/tempdeckname.apkg', as_attachment=True)
+
     else:
         print(form.file.data)
+
+    # not deleting return file for some reason
+    if os.path.exists(DOWNLOAD_FOLDER+'tempdeckname.apkg'):
+        os.remove(DOWNLOAD_FOLDER+'tempdeckname.apkg')
         
     return render_template('deckbuilder.html',title='App', form=form)
