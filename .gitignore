@@ -8,3 +8,4 @@ anki_site/instance/uploads
 anki_site/instance/created
 .pytest_cache/
 *.env
+unused.css

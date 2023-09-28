@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, send_file
+from flask import render_template, url_for, flash, redirect, request, send_file, session
 from anki_site.forms import UploadForm, RegistrationForm, LoginForm
 from werkzeug.utils import secure_filename
 from anki_site.backend_script import create_deck_from_file
@@ -62,6 +62,10 @@ def decks():
 
 
 
+@app.route('/download/<deckname>')
+def download(deckname: str):
+
+    return send_file('instance/files/created/'+current_user.username+'/'+deckname+'apkg', as_attachment=True)
 
 
 
@@ -70,34 +74,23 @@ def deckbuilder():
     UPLOAD_FOLDER = "anki_site/instance/files/uploads/"
     DOWNLOAD_FOLDER = "anki_site/instance/files/created/"
     form = UploadForm()
-    filename = ''
     if form.validate_on_submit():
         
-        file = form.file.data
-        if file:
-            filename = secure_filename(file.filename)
-            file.save(UPLOAD_FOLDER+filename)
-            # run script based on pdf insertion
-            create_deck_from_file(UPLOAD_FOLDER+filename,'pdf','fr','en',
-                                  'tempdeckname',DOWNLOAD_FOLDER)
-            if os.path.exists(UPLOAD_FOLDER+filename):
-                os.remove(UPLOAD_FOLDER+filename)
-            # log if it doesnt exist
-            
-        else:
-            raw = form.raw_string.data
-            with open(UPLOAD_FOLDER+'textfile.txt', 'w') as file:
-                file.write(raw)
-            # run script based on raw text
-            create_deck_from_file(UPLOAD_FOLDER+'textfile.txt','txt','fr','en',
-                                  'tempdeckname',DOWNLOAD_FOLDER)
-            if os.path.exists(UPLOAD_FOLDER+'textfile.txt'):
-                os.remove(UPLOAD_FOLDER+'textfile.txt')
+        deckname = form.deckname.data
+        raw = form.raw_string.data
+        with open(UPLOAD_FOLDER+'textfile.txt', 'w') as file:
+            file.write(raw)
+        # run script based on raw text
+        create_deck_from_file(UPLOAD_FOLDER+'textfile.txt','txt','fr','en',
+                            deckname,DOWNLOAD_FOLDER+current_user.username+"/")
+        session['filename'] = deckname
+        if os.path.exists(UPLOAD_FOLDER+'textfile.txt'):
+            os.remove(UPLOAD_FOLDER+'textfile.txt')
 
-        return send_file('instance/files/created/tempdeckname.apkg', as_attachment=True)
+        return redirect(url_for('download', deckname=deckname))
 
     else:
-        print(form.file.data)
+        pass
 
     # not deleting return file for some reason
     if os.path.exists(DOWNLOAD_FOLDER+'tempdeckname.apkg'):

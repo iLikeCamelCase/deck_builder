@@ -7,13 +7,15 @@
 {% block header %}
 <header class="py-5" style="flex-grow: 1;">
     <div class="container px-lg-5">
-        <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+        <div class="p-4 p-lg-5 bg-light rounded-5 text-center">
             <div class="m-4 m-lg-5">
-                <h1 class="display-5 fw-bold">Create an Anki deck and start expanding your vocabulary now!</h1>
-                <p class="fs-4">Is the happy go-lucky tone of the text getting you excited for mind-numbing memorization drills? I certainly hope so!</p>
+                <h1 class="display-5 fw-bold">Copy and paste your french text here.</h1>
+                <p class="fs-4"> We will create an anki deck to help you with your memorization drills.</p>
+                <!--
                 <div>
                     <img src="static/assets/pdftoflashcard.png" alt="Clip art of a PDF file turning into a memorization flashcard" class="" style="max-height: 150px; position: relative;">
                 </div>
+            -->
                 <!--
                 <form method="post" action="{{ url_for('deckbuilder') }}" class="form" style="width: 200pt; margin: auto;">
                     {{ wtf.quick_form(form) }}
@@ -21,11 +23,13 @@
             -->
                 <form method="post" action="{{ url_for('deckbuilder') }}" enctype="multipart/form-data"  >
                     {{ form.hidden_tag() }}
-                    <div class="my-flex-row" style="align-items: center; justify-content: center;" >
+                    <div>
+                        
                         <div>
-                            {{ form.file.label }}
-                            {{ form.file }}
+                            {{ form.deckname.label }}
+                            {{ form.deckname }}
                         </div>
+                    
                         <div>
                             {{ form.raw_string.label }}
                             {{ form.raw_string }}

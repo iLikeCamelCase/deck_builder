@@ -5,13 +5,17 @@
 
 {% block header %}
 <header class="py-5">
-    <div class="container px-lg-5">
-        <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
-            <div class="m-4 m-lg-5">
-                <h1 class="display-5 fw-bold">Language learning made easy!</h1>
-                <p class="fs-4">Did you know spaced repetition using apps like Anki can improve vocabulary retention by up to 150%? Click below to create an Anki deck and fast track your language learning!</p>
-                <a class="btn btn-primary btn-lg" href="{{ url_for('deckbuilder') }}">Call to action</a>
+    <div class="my-flex-row" style="padding-top: 3%;">
+        <div class="m-4 m-lg-0 bla">
+            <h1 class="big-letters">Tabar<code>&#8212;</code>what?</h1>
+            <p class="fs-4">If you thought you knew french... Think again...</p>
+            <div>
+                <a class="btn btn-primary btn-lg" href="{{ url_for('deckbuilder') }}" style="margin-bottom: auto;">Learn more</a>
             </div>
+            <img src="static/assets/protester.png" style="max-height: 375px; margin-left: 12%; padding-top: 50px;">
+            </div>
+        <div style="margin-left: auto; padding-right: 7%;">
+            <img src="static/assets/words.png" style="opacity: 0.7;">
         </div>
     </div>
 </header>

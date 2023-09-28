@@ -23,7 +23,7 @@
     </head>
     <body class="wrapper">
         <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-white bg-white">
             <div class="container px-lg-5">
                 <a class="navbar-brand" href="{{ url_for('index') }}">Deck Builder</a>
                 
@@ -67,8 +67,8 @@
         {% block body %}
         {% endblock body %}
         <!-- Footer-->
-        <footer class="footer mt-auto bg-dark"> <!--had py-5 in class before but that messed with height of footer-->
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; </p></div>
+        <footer class="footer mt-auto bg-white"> <!--had py-5 in class before but that messed with height of footer-->
+            <div class="container" style="opacity: .5;"><p class="m-0 text-center text-black">Copyright &copy; Julian DiCecco</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
